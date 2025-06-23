@@ -1,0 +1,10 @@
+{
+
+"name": "relation",
+  "compatibility_date": "2025-06-23",
+  "assets": { 
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS"
+  },
+  "main": "./api/index.ts"
+}
