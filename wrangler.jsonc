@@ -6,5 +6,12 @@
     "not_found_handling": "single-page-application",
     "binding": "ASSETS"
   },
-  "main": "./api/index.js"
+  "main": "./api/index.js",
+  "d1_databases": [
+    {
+      "binding": "relation",
+      "database_name": "relation",
+      "database_id": "3c582386-aa5b-45d5-9ab9-f8507cc37ae8"
+    }
+  ]
 }

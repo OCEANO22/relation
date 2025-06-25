@@ -1,3 +1,98 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { RouterLink } from 'vue-router'
+
+// Tipe tidak diperlukan di JavaScript
+const relations = ref([])
+
+const fetchRelations = async () => {
+  const response = await fetch('/api/relations')
+  const data = await response.json()
+  relations.value = data
+}
+
+onMounted(() => {
+  fetchRelations()
+})
+
+const removeRelation = async (id) => {
+  const response = await fetch(`/api/relations/${id}`, {
+    method: 'DELETE',
+  })
+  if (response.ok) {
+    fetchRelations()
+  }
+}
+
+// Program kerja tetap sama
+const programKerja = [
+  {
+    nama: 'Bakti Ramadan',
+    tujuan: 'Meningkatkan kepedulian sosial dan kebersamaan di bulan Ramadan',
+    deskripsi: 'Kegiatan berbagi seperti buka puasa bersama, santunan anak yatim, dan pembagian sembako',
+    waktu: 'Ramadan 2025',
+    sasaran: 'Masyarakat',
+    pj: 'Dev. Publik'
+  },
+  {
+    nama: 'Malam Keakraban (Makrab) Fakultas',
+    tujuan: 'Membangun solidaritas dan kebersamaan antar mahasiswa IT dengan prodi Teknik lainnya',
+    deskripsi: 'Kegiatan perkenalan, outbond, diskusi, dan hiburan',
+    waktu: 'Kondisional',
+    sasaran: 'Mahasiswa Fakultas Teknik',
+    pj: 'Dev. Publik'
+  },
+  {
+    nama: 'Studi Banding',
+    tujuan: 'Menambah wawasan dan membangun relasi dengan organisasi dari institusi lain',
+    deskripsi: 'Kunjungan ke universitas lain untuk berbagi pengalaman dan belajar manajemen organisasi',
+    waktu: 'Kondisional',
+    sasaran: 'Organisasi Kampus Lain',
+    pj: 'Dev. Publik'
+  },
+  {
+    nama: 'Turnamen Futsal',
+    tujuan: 'Menjalin kekompakan dan meningkatkan sportivitas antar mahasiswa',
+    deskripsi: 'Kompetisi futsal antar jurusan atau fakultas dengan sistem turnamen',
+    waktu: 'Kondisional',
+    sasaran: 'Mahasiswa',
+    pj: 'Dev. Publik'
+  }
+]
+
+// Komentar form data
+const nama = ref('')
+const email = ref('')
+const pesan = ref('')
+const komentar = ref([])
+
+async function submitKomentar() {
+  try {
+    await fetch("https://relation.n-oceano22.workers.dev/api/komentar", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nama: nama.value,
+        email: email.value,
+        pesan: pesan.value
+      })
+    })
+
+    komentar.value.push({
+      nama: nama.value,
+      email: email.value,
+      pesan: pesan.value
+    })
+
+    // Reset form
+    nama.value = ''
+    email.value = ''
+    pesan.value = ''
+  } catch (err) {
+    console.error('Gagal mengirim komentar:', err)
+  }
+}
+</script>
 
 <template>
   <div>
@@ -109,73 +204,6 @@
     </footer>
   </div>
 </template>
-
-<script setup>
-const programKerja = [
-  {
-    nama: 'Bakti Ramadan',
-    tujuan: 'Meningkatkan kepedulian sosial dan kebersamaan di bulan Ramadan',
-    deskripsi: 'Kegiatan berbagi seperti buka puasa bersama, santunan anak yatim, dan pembagian sembako',
-    waktu: 'Ramadan 2025',
-    sasaran: 'Masyarakat',
-    pj: 'Dev. Publik'
-  },
-  {
-    nama: 'Malam Keakraban (Makrab) Fakultas',
-    tujuan: 'Membangun solidaritas dan kebersamaan antar mahasiswa IT dengan prodi Teknik lainnya',
-    deskripsi: 'Kegiatan perkenalan, outbond, diskusi, dan hiburan',
-    waktu: 'Kondisional',
-    sasaran: 'Mahasiswa Fakultas Teknik',
-    pj: 'Dev. Publik'
-  },
-  {
-    nama: 'Studi Banding',
-    tujuan: 'Menambah wawasan dan membangun relasi dengan organisasi dari institusi lain',
-    deskripsi: 'Kunjungan ke universitas lain untuk berbagi pengalaman dan belajar manajemen organisasi',
-    waktu: 'Kondisional',
-    sasaran: 'Organisasi Kampus Lain',
-    pj: 'Dev. Publik'
-  },
-  {
-    nama: 'Turnamen Futsal',
-    tujuan: 'Menjalin kekompakan dan meningkatkan sportivitas antar mahasiswa',
-    deskripsi: 'Kompetisi futsal antar jurusan atau fakultas dengan sistem turnamen',
-    waktu: 'Kondisional',
-    sasaran: 'Mahasiswa',
-    pj: 'Dev. Publik'
-  }
-]
-import { ref } from 'vue'
-
-const nama = ref('')
-const email = ref('')
-const pesan = ref('')
-const komentar = ref([])
-
-async function submitKomentar() {
-  try {
-      await fetch("https://public.n-oceano22.workers.dev/api/komentar", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nama: nama.value,
-        email: email.value,
-        pesan: pesan.value
-      })
-    })
-
-    
-    komentar.value.push({ nama: nama.value,email: email.value, pesan: pesan.value })
-
-    // Reset form
-    nama.value = ''
-    email.value = ''
-    pesan.value = ''
-  } catch (err) {
-    console.error('Gagal mengirim komentar:', err)
-  }
-}
-</script>
 
 <style scoped>
 body {
