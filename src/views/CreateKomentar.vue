@@ -8,7 +8,7 @@ const berhasil = ref(false)
 
 async function submitKomentar() {
   try {
-    const response = await fetch("https://relation.n-oceano22.workers.dev/api/komentar", {
+    const response = await fetch("/api/komentar", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
