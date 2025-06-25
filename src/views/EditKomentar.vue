@@ -12,7 +12,7 @@ const komentarId = route.params.id  // pastikan route ini seperti /edit/:id
 // Ambil data komentar berdasarkan ID
 const fetchKomentar = async () => {
   try {
-    const response = await fetch(`api/komentar/${komentarId}`)
+    const response = await fetch(`https://relation.n-oceano22.workers.dev/api/komentar/${komentarId}`)
     if (!response.ok) throw new Error('Gagal mengambil data komentar')
     komentar.value = await response.json()
   } catch (err) {
