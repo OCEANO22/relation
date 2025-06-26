@@ -68,7 +68,7 @@ const komentar = ref([])
 
 async function submitKomentar() {
   try {
-    await fetch("/api/relations", {
+    await fetch("/api/relation/relations", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
