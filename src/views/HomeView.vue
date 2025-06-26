@@ -6,7 +6,7 @@ import { RouterLink } from 'vue-router'
 const relations = ref([])
 
 const fetchRelations = async () => {
-  const response = await fetch('/api/relations')
+  const response = await fetch('/api/relation')
   const data = await response.json()
   relations.value = data
 }
