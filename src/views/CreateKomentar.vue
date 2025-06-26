@@ -8,15 +8,15 @@ const berhasil = ref(false)
 
 async function submitKomentar() {
   try {
-    const response = await fetch("/api/relations/", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nama: nama.value,
-        email: email.value,
-        pesan: pesan.value
-      })
-    })
+    const response = await fetch("/api/relations", {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    nama: nama.value,
+    email: email.value,
+    pesan: pesan.value
+  })
+})
 
     if (!response.ok) {
       throw new Error('Gagal mengirim komentar')

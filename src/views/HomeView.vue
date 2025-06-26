@@ -1,12 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
 
-// Tipe tidak diperlukan di JavaScript
+// DATA RELATIONS (dari database)
 const relations = ref([])
 
 const fetchRelations = async () => {
-  const response = await fetch('/api/relation')
+  const response = await fetch('/api/relations/') // ✅ FIXED
   const data = await response.json()
   relations.value = data
 }
@@ -24,7 +23,7 @@ const removeRelation = async (id) => {
   }
 }
 
-// Program kerja tetap sama
+// PROGRAM KERJA STATIK
 const programKerja = [
   {
     nama: 'Bakti Ramadan',
@@ -60,15 +59,14 @@ const programKerja = [
   }
 ]
 
-// Komentar form data
+// FORM KOMENTAR
 const nama = ref('')
 const email = ref('')
 const pesan = ref('')
 const komentar = ref([])
-
 async function submitKomentar() {
   try {
-    await fetch("/api/relation/relations", {
+    const response = await fetch("/api/relations", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -78,21 +76,27 @@ async function submitKomentar() {
       })
     })
 
+    if (!response.ok) {
+      throw new Error('Gagal mengirim komentar')
+    }
+
     komentar.value.push({
       nama: nama.value,
       email: email.value,
       pesan: pesan.value
     })
 
-    // Reset form
     nama.value = ''
     email.value = ''
     pesan.value = ''
   } catch (err) {
-    console.error('Gagal mengirim komentar:', err)
+    console.error('Error:', err)
+    alert('Gagal mengirim komentar')
   }
 }
+
 </script>
+
 
 <template>
   <div>

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS relations (
+  id TEXT PRIMARY KEY,
+  nama TEXT NOT NULL,
+  email TEXT NOT NULL,
+  pesan TEXT NOT NULL
+);
