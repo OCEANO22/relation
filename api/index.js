@@ -7,7 +7,7 @@ app.get('/api/relations', async (c) => {
   return c.json(results)
 })
 
-app.post('/api/relations', async (c) => {
+app.post('/api/relations/komentar/', async (c) => {
   const newId = crypto.randomUUID()
   const input = await c.req.json()
   const query = `INSERT INTO relations(id, nama, email, pesan) VALUES (?, ?, ?, ?)`
@@ -15,13 +15,13 @@ app.post('/api/relations', async (c) => {
   return c.json({ id: newId, ...input })
 })
 
-app.get('/api/relations/:id', async (c) => {
+app.get('/api/relations/komentar/:id', async (c) => {
   const id = c.req.param('id')
   const { results } = await c.env.DB.prepare('SELECT * FROM relations WHERE id = ?').bind(id).all()
   return c.json(results[0])
 })
 
-app.put('/api/relations/:id', async (c) => {
+app.put('/api/relations/komentar/:id', async (c) => {
   const id = c.req.param('id')
   const input = await c.req.json()
   const query = `UPDATE relations SET nama = ?, email = ?, pesan = ? WHERE id = ?`
