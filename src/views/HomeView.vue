@@ -187,6 +187,10 @@ async function submitKomentar() {
         <p>{{ item.email }}</p>
         <p>{{ item.pesan }}</p>
       </div>
+      <div class="button">
+        <button>Edit</button>
+        <button>Hapus</button>
+      </div>
     </div>
   </section>
 </div>
