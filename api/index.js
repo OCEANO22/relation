@@ -30,9 +30,9 @@ app.post('/api/relations', async (c) => {
       "INSERT INTO relations (id, nama, email, pesan) VALUES (?, ?, ?, ?)"
     ).bind(id, input.nama, input.email, input.pesan).run()
 
-    return c.json({ id, ...input })
+    return c.json({ success: true, id, ...input })
   } catch (err) {
-    return c.json({ error: err && err.message ? err.message : String(err) }, 500)
+    return c.json({ error: err.message }, 500)
   }
 })
 
