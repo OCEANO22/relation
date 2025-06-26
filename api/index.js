@@ -1,41 +1,62 @@
 import { Hono } from 'hono'
 
+// Define the Bindings type if not already defined
+/**
+ * @typedef {Object} Bindings
+ * @property {any} DB
+ * @property {any} ASSETS
+ */
+
+// If using TypeScript, uncomment and adjust the following interface:
+// interface Bindings {
+//   DB: any;
+//   ASSETS: any;
+// }
+
 const app = new Hono()
 
 app.get('/api/relations', async (c) => {
-  const { results } = await c.env.DB.prepare('SELECT * FROM relations').all()
+  // You need to fetch results from the database here
+  const { results } = await c.env.DB.prepare("SELECT * FROM relations").all()
   return c.json(results)
 })
 
-app.post('/api/relations/', async (c) => {
-  const newId = crypto.randomUUID()
-  const input = await c.req.json()
-  const query = `INSERT INTO relations(id, nama, email, pesan) VALUES (?, ?, ?, ?)`
-  await c.env.DB.prepare(query).bind(newId, input.nama, input.email, input.pesan).run()
-  return c.json({ id: newId, ...input })
+app.post('/api/relations', async (c) => {
+  try {
+    const input = await c.req.json()
+    const id = crypto.randomUUID()
+
+    await c.env.DB.prepare(
+      "INSERT INTO relations (id, nama, email, pesan) VALUES (?, ?, ?, ?)"
+    ).bind(id, input.nama, input.email, input.pesan).run()
+
+    return c.json({ id, ...input })
+  } catch (err) {
+    return c.json({ error: err && err.message ? err.message : String(err) }, 500)
+  }
 })
 
 app.get('/api/relations/:id', async (c) => {
   const id = c.req.param('id')
-  const { results } = await c.env.DB.prepare('SELECT * FROM relations WHERE id = ?').bind(id).all()
+  const { results } = await c.env.DB.prepare("SELECT * FROM relations WHERE id = ?").bind(id).all()
   return c.json(results[0])
 })
 
 app.put('/api/relations/:id', async (c) => {
   const id = c.req.param('id')
   const input = await c.req.json()
-  const query = `UPDATE relations SET nama = ?, email = ?, pesan = ? WHERE id = ?`
-  await c.env.DB.prepare(query).bind(input.nama, input.email, input.pesan, id).run()
-  return c.json({ id, ...input })
+  await c.env.DB.prepare(
+    "UPDATE relations SET nama = ?, email = ?, pesan = ? WHERE id = ?"
+  ).bind(input.nama, input.email, input.pesan, id).run()
+  return c.json({ success: true, id })
 })
 
 app.delete('/api/relations/:id', async (c) => {
   const id = c.req.param('id')
-  await c.env.DB.prepare('DELETE FROM relations WHERE id = ?').bind(id).run()
-  return c.json({ message: 'Relation deleted', id })
+  await c.env.DB.prepare("DELETE FROM relations WHERE id = ?").bind(id).run()
+  return c.json({ deleted: true, id })
 })
 
-// Serve static assets (UI)
 app.get('*', (c) => c.env.ASSETS.fetch(c.req.raw))
 
 export default app

@@ -1,17 +1,18 @@
 {
-
-"name": "relation",
-  "compatibility_date": "2025-06-23",
-  "assets": { 
-    "not_found_handling": "single-page-application",
-    "binding": "ASSETS"
+  "name": "relation",
+  "main": "api/index.js",
+  "compatibility_date": "2025-06-25",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
   },
-  "main": "./api/index.js",
   "d1_databases": [
     {
-      "binding": "relation",
+      "binding": "DB",
       "database_name": "relation",
-      "database_id": "3c582386-aa5b-45d5-9ab9-f8507cc37ae8"
+      "database_id": "3c582386-aa5b-45d5-9ab9-f8507cc37ae8" 
     }
   ]
 }
+
