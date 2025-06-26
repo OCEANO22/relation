@@ -188,8 +188,10 @@ async function submitKomentar() {
         <p>{{ item.pesan }}</p>
       </div>
       <div class="button">
-        <button>Edit</button>
-        <button>Hapus</button>
+        <router-link :to="'/relations/${item.id}'">Edit</router-link>
+        </div>
+        <div>
+        <button @click="removeRelation(item.id)">Hapus</button>
       </div>
     </div>
   </section>
