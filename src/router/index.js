@@ -18,13 +18,11 @@ const router = createRouter({
       path: '/relations/:id',
       name: 'edit-komentar',
       component: () => import('../views/EditKomentar.vue'),
+      props: true, // ✅ biar `id` langsung masuk sebagai props ke komponen
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
   ],

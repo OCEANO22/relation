@@ -189,8 +189,6 @@ async function submitKomentar() {
       </div>
       <div class="button">
         <router-link :to="'/relations/${item.id}'">Edit</router-link>
-        </div>
-        <div>
         <button @click="removeRelation(item.id)">Hapus</button>
       </div>
     </div>
